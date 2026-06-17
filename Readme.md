@@ -39,7 +39,7 @@ Slot-Machine/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Slot-Machine.git
+git clone https://github.com/Tenebris404/Slot-Machine.git
 ```
 
 ### 2. Navigate to the project folder
