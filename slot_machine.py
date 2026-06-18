@@ -65,9 +65,9 @@ def get_bet():
             if MIN_BET <= bet <= MAX_BET:
                 return bet
             else:
-                print("Invalid bet.")
+                print(f" ⚠️  bet must be between ${MIN_BET} and ${MAX_BET}.")
         else:
-            print("Enter a valid number.")
+            print("Enter a valid number.")                                      
 
 
 
@@ -128,38 +128,60 @@ def winning(columns, lines, bet):
     return total_win
 
 
+def play_again():
+    while True:
+        choice = input("\nPress Enter to spin again, or type 'q' to quit: ").strip().lower()
+
+        if choice == "":
+            return True
+        elif choice == "q":
+            return False
+        else:
+            print("Invalid input. Press Enter to continue or 'q' to quit.")
+
+
 # ------------------ MAIN ------------------
 
 def main():
 
     balance = deposit()
 
-    lines = get_lines()
-
     while True:
+        # Ask for number of lines each round
+        lines = get_lines()
 
-        bet = get_bet()
+        while True:
 
-        total_bet = bet * lines
+            bet = get_bet()
 
-        if total_bet > balance:
-            print("Not enough balance.")
-        else:
+            total_bet = bet * lines
+
+            if total_bet > balance:
+                print("Not enough balance.")
+            else:
+                break
+
+        print("\nSpinning...\n")
+
+        columns = get()
+
+        print_slot_machine(columns)
+
+        winnings = winning(columns, lines, bet)
+
+        print(f"\nYou won: ${winnings}")
+
+        balance = balance - total_bet + winnings
+
+        print(f"Remaining Balance: ${balance}")
+
+        if balance <= 0:
+            print("\nYou're out of balance. Game over.")
             break
 
-    print("\nSpinning...\n")
-
-    columns = get()
-
-    print_slot_machine(columns)
-
-    winnings = winning(columns, lines, bet)
-
-    print(f"\nYou won: ${winnings}")
-
-    balance = balance - total_bet + winnings
-
-    print(f"Remaining Balance: ${balance}")
+        if not play_again():
+            print(f"\nThanks for playing! Final balance: ${balance}")
+            break
 
 
 main()
